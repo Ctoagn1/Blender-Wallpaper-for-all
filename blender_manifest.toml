@@ -7,7 +7,7 @@ tagline = "Apply Wallpaper Colors to Blender Theme"
 maintainer = "Ctoagn1 <qwezese@gmail.com>"
 type = "add-on"
 
-website = "https://github.com/Ctoagn1/blender-wal/"
+website = "https://github.com/Ctoagn1/Blender-Wallpaper-for-all"
 
 blender_version_min = "4.2.0"
 

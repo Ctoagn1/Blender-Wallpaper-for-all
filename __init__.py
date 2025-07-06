@@ -100,7 +100,7 @@ class WAL_operator(bpy.types.Operator):
         if axis_change:
             contents = re.sub("x-axis-color_", colors[20], contents)
             contents = re.sub("y-axis-color_", colors[21], contents)
-            contents = re.sub("z-axis-color_", colors[22], contents)
+            contents = re.sub("z-axis-color_", colors[18], contents)
             contents = re.sub("grid-color_", colors[19], contents)
         else:
             contents = re.sub("x-axis-color_", "#ff3352", contents)
