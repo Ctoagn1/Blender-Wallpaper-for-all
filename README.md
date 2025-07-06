@@ -1,6 +1,6 @@
 # Blender-Wallpaper-for-all
 Dependency-free addon for blender on windows/mac/linux that creates a theme based on your wallpaper!
-Download with `git clone https://github.com/Ctoagn1/Blender-Wallpaper-for-all/' and go to Preferences > Add-ons > Install from Disk and load the zip. 
+Download with `git clone https://github.com/Ctoagn1/Blender-Wallpaper-for-all/` and go to Preferences > Add-ons > Install from Disk and load the zip. 
 
 Uses a modified colorz.py to retrieve wallpaper colors- retrieves the images via blender's bpy and uses a weighted k-mean to determine the most commonly occurring colors. 
 Credit to `https://github.com/metakirby5/colorz`
