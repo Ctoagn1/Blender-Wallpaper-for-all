@@ -26,6 +26,12 @@ def init_properties():
         name='Random/Unseeded Theme',
         default=False
     )
+    bpy.types.Scene.acc_shift = bpy.props.IntProperty(
+        name='Accuracy (lower is faster!)',
+        default = 25,
+        min=1,
+        soft_max=50
+    )
     
     bpy.types.Scene.saturation_shift = bpy.props.FloatProperty(
         name='Saturation Shift',
@@ -38,6 +44,7 @@ def clear_properties():
     del bpy.types.Scene.axis_shift
     del bpy.types.Scene.saturation_shift
     del bpy.types.Scene.rand_shift
+    del bpy.types.Scene.acc_shift
 
 class MainPanel(bpy.types.Panel):
     bl_label = "Wal Theme"
@@ -51,6 +58,7 @@ class MainPanel(bpy.types.Panel):
         layout.prop(context.scene, "axis_shift")
         layout.prop(context.scene, "rand_shift")
         layout.prop(context.scene, "saturation_shift")
+        layout.prop(context.scene, "acc_shift")
         layout.operator("wal.operator")
         
 class WAL_operator(bpy.types.Operator):
@@ -72,7 +80,7 @@ class WAL_operator(bpy.types.Operator):
         b=f"{int(b* 255):02x}"
         return "#"+r+g+b
 
-    def apply_colors(self, home, workingdir, blenderversion, axis_change, saturation, rand):
+    def apply_colors(self, home, workingdir, blenderversion, axis_change, saturation, rand, acc):
         image = wallpaper.get_desktop_wallpaper(wallpaper.get_desktop_env())
         try:
             image = os.path.expanduser(os.path.normpath(image.replace('$HOME', '~')))
@@ -81,7 +89,7 @@ class WAL_operator(bpy.types.Operator):
         if image is None:
             self.report({'ERROR'}, "Could not find wallpaper")
             return {'CANCELLED'}
-        raw_colors = colorz.colorz(bpy.data.images.load(image), n=6, bold_add=0, randomness=rand)
+        raw_colors = colorz.colorz(bpy.data.images.load(image), n=6, bold_add=0, randomness=rand, accuracy=acc)
         colors =["#000000"] + [wallpaper.rgb_to_hex([*color[0]]) for color in raw_colors]
         while len(colors)<30:
             colors.append("#000000")
@@ -116,7 +124,7 @@ class WAL_operator(bpy.types.Operator):
         workingdir = os.path.dirname(os.path.abspath(__file__))
         home = os.path.expanduser("~")
         blenderversion = f"{bpy.app.version[0]}.{bpy.app.version[1]}"
-        self.apply_colors(home, workingdir, blenderversion, context.scene.axis_shift, context.scene.saturation_shift, context.scene.rand_shift)
+        self.apply_colors(home, workingdir, blenderversion, context.scene.axis_shift, context.scene.saturation_shift, context.scene.rand_shift, context.scene.acc_shift)
         return {'FINISHED'}
     
 classes = [

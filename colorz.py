@@ -25,6 +25,7 @@ DEFAULT_MAXV = 255
 DEFAULT_BOLD_ADD = 50
 DEFAULT_FONT_SIZE = 1
 DEFAULT_BG_COLOR = '#272727'
+DEFAULT_ACCURACY = 100
 
 THUMB_SIZE = (200, 200)
 SCALE = 256.0
@@ -157,7 +158,7 @@ def brighten(color, brightness):
 
 
 def colorz(fd, n=DEFAULT_NUM_COLORS, min_v=DEFAULT_MINV, max_v=DEFAULT_MAXV,
-           bold_add=DEFAULT_BOLD_ADD, order_colors=True, randomness=False):
+           bold_add=DEFAULT_BOLD_ADD, order_colors=True, randomness=False, accuracy=DEFAULT_ACCURACY):
     """
     Get the n most dominant colors of an image.
     Clamps value to between min_v and max_v.
@@ -177,7 +178,7 @@ def colorz(fd, n=DEFAULT_NUM_COLORS, min_v=DEFAULT_MINV, max_v=DEFAULT_MAXV,
     colors_only = [color for color, count in obs]
     counts = [count for color, count in obs]
     clamped = [clamp(color, min_v, max_v) for color in colors_only]
-    clusters = kmeans(randomness, array(clamped).astype(float), counts, n)
+    clusters = kmeans(randomness, array(clamped).astype(float), counts, n, max_iter=accuracy)
     colors = order_by_hue(clusters) if order_colors else clusters
     return list(zip(colors, [brighten(c, bold_add) for c in colors]))
 
