@@ -62,9 +62,10 @@ def get_desktop_env():
     return None
 
 def get_desktop_wallpaper(desktop):
-    if not desktop:
-        return None
-    desktop = str(desktop).lower()
+    try:
+        desktop = str(desktop).lower()
+    except:
+        pass
 
     try:
         if "gnome" in desktop or "unity" in desktop or "cinnamon" in desktop:

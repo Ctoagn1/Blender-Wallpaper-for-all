@@ -107,8 +107,8 @@ class WAL_operator(bpy.types.Operator):
             contents = re.sub("y-axis-color_", "#8bdc00", contents)
             contents = re.sub("z-axis-color_", "#2890ff", contents)
             contents = re.sub("grid-color_", "#545454", contents)
-        os.makedirs(f"{home}/.config/blender/{blenderversion}/scripts/presets/interface_theme", exist_ok=True)
-        with open(f"{home}/.config/blender/{blenderversion}/scripts/presets/interface_theme/Wal_Theme.xml", "w") as templatefile:
+        theme_dir = bpy.utils.user_resource( 'SCRIPTS', path="presets/interface_theme", create=True)
+        with open(os.path.join(theme_dir, "Wal_Theme.xml"), "w") as templatefile:
             templatefile.write(contents)
         
 
